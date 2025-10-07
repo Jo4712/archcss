@@ -1,4 +1,4 @@
-# ArchCSS Current Limitations
+# archcss Current Limitations
 
 Based on the ground floor plan example, here's what's currently possible and what's not yet implemented.
 
@@ -73,7 +73,7 @@ Based on the ground floor plan example, here's what's currently possible and wha
 - [ ] Floor levels (multi-story buildings)
 - [ ] **Workaround**: Use CSS `transform: perspective()` for basic 3D effects
 
-### Component System (In Progress)
+### File-based Component System (In Progress)
 
 - [ ] `import` statement (currently in spec, not implemented)
 - [ ] `use` placement (currently in spec, not implemented)

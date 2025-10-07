@@ -18,13 +18,13 @@ describe("Tokenizer", () => {
     expect(tokens[5].type).toBe(TokenType.SEMICOLON);
   });
 
-  it("should tokenize @plan with @canvas", () => {
-    const source = `@plan MyHome {
+  it("should tokenize @draw with @canvas", () => {
+    const source = `@draw MyHome {
   @canvas 20U x 12U;
 }`;
     const tokens = tokenize(source);
 
-    expect(tokens[0].type).toBe(TokenType.AT_PLAN);
+    expect(tokens[0].type).toBe(TokenType.AT_DRAW);
     expect(tokens[1].type).toBe(TokenType.IDENTIFIER);
     expect(tokens[1].value).toBe("MyHome");
     expect(tokens[2].type).toBe(TokenType.LBRACE);

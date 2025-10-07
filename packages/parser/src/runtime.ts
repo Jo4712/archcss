@@ -1,5 +1,5 @@
 /**
- * Runtime for ArchCSS
+ * Runtime for archcss
  * Mounts compiled model into DOM
  */
 
@@ -99,6 +99,6 @@ export function update(
   model: CompiledModel
 ): void {
   // For now, just remount
-  // TODO: Implement smart diffing for better performance
+  // TODO(project-plan.md Phase 3; specification.md §Example developer workflow): Implement smart diffing so HMR updates avoid full remounts.
   mount(target, model);
 }

@@ -1,6 +1,6 @@
 /**
  * @archcss/parser
- * Parser for ArchCSS (.arch) files
+ * Parser for archcss (.arch) files
  */
 
 export * from "./types.js";

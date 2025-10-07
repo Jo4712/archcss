@@ -1,12 +1,12 @@
-# ArchCSS Specification
+# archcss Specification
 
 > A DSL for floor plans that compiles to pure CSS + HTML
 
-# ArchCSS Manifesto
+# archcss Manifesto
 
 ## Design Philosophy
 
-ArchCSS is built on a simple principle: **Use CSS wherever possible. Invent syntax only when necessary.**
+archcss is built on a simple principle: **Use CSS wherever possible. Invent syntax only when necessary.**
 
 ### Core Tenets
 
@@ -42,12 +42,12 @@ ArchCSS is built on a simple principle: **Use CSS wherever possible. Invent synt
    - Add advanced features: container queries, CSS Grid, custom properties
    - Everything is optional
 
-### What ArchCSS Adds
+### What archcss Adds
 
-ArchCSS provides only what CSS cannot:
+archcss provides only what CSS cannot:
 
 - **Spatial positioning**: `at (x, y) size (w, h)` - absolute positioning in grid units
-- **Component system**: `@draw`, `import`, `use` - reusable compositions
+- **File-based component system**: `import`, `use` with `.arch` files - reusable compositions
 - **Visual hierarchy**: `@1`, `@2`, `@3` - semantic organization
 - **Canvas definition**: `@canvas` - workspace boundaries
 - **Unit system**: `@unit` - project-wide unit declarations
@@ -63,9 +63,9 @@ Everything else is standard CSS.
 ```javascript
 @1;
 @draw MyHome {
-  @canvas 20U x 12U;  // ArchCSS: spatial definition
+  @canvas 20U x 12U;  // archcss: spatial definition
 
-  room living at (1U, 1U) size (6U, 4U) {  // ArchCSS: positioning
+  room living at (1U, 1U) size (6U, 4U) {  // archcss: positioning
     label: "Living Room";
 
     // Pure CSS from here:
@@ -106,7 +106,7 @@ Everything else is standard CSS.
 
 ### The Promise
 
-**If you can do it in CSS, you can do it in ArchCSS.**
+**If you can do it in CSS, you can do it in archcss.**
 
 - Want animations? Use `@keyframes` and `animation`
 - Want gradients? Use `linear-gradient` and `radial-gradient`
@@ -115,7 +115,7 @@ Everything else is standard CSS.
 - Want variables? Use `--custom-properties`
 - Want dark mode? Use `@media (prefers-color-scheme: dark)`
 
-ArchCSS gets out of your way and lets CSS do what it does best.
+archcss gets out of your way and lets CSS do what it does best.
 
 ### Implementation Commitment
 
@@ -137,11 +137,11 @@ CSS is:
 - Documented extensively
 - Universal developer knowledge
 
-ArchCSS doesn't need to compete with CSS. It complements CSS by adding spatial composition primitives that CSS lacks.
+archcss doesn't need to compete with CSS. It complements CSS by adding spatial composition primitives that CSS lacks.
 
 ---
 
-**In summary: ArchCSS is a thin layer for spatial composition. Everything else is CSS.**
+**In summary: archcss is a thin layer for spatial composition. Everything else is CSS.**
 
 ## 1) Pick a direction (MVP scope)
 
@@ -189,7 +189,7 @@ Keep it declarative and CSS-ish with **at-rules** and **blocks** so a PostCSS pl
 
 ### Hierarchy Markers (`@1`, `@2`, `@3`, etc.)
 
-ArchCSS uses simple numeric at-rules to mark the visual hierarchy depth of components. These markers control color intensity and organize components in the editor's component picker.
+archcss uses simple numeric at-rules to mark the visual hierarchy depth of components. These markers control color intensity and organize components in the editor's component picker.
 
 **Syntax**
 
@@ -736,7 +736,7 @@ use Kitchen.main at (5m,4m);
 
 ### Repeat patterns and room-edge syntax
 
-ArchCSS supports two modes for repeating components (windows, doors, fixtures):
+archcss supports two modes for repeating components (windows, doors, fixtures):
 
 **Coordinate-based (absolute positioning)**
 
@@ -891,7 +891,7 @@ You can omit unit names for cleaner code:
 
 ## Configuration (`arch.config.json`)
 
-ArchCSS projects can include an optional configuration file for project-wide settings.
+archcss projects can include an optional configuration file for project-wide settings.
 
 **Location**
 
@@ -1291,6 +1291,36 @@ You can write this in ~100 lines of TypeScript.
 - **VS Code**: grammar with Monarch for syntax highlighting + simple completions (room/wall/door snippets)
 - **Export**: `export as SVG` by walking the model and generating basic shapes (later).
 
+## 10.5) Current Limitations (October 2025)
+
+The DSL and tooling are still evolving. The following gaps reflect the latest ground-floor authoring pass and should be used as guardrails when planning features.
+
+### Currently Possible
+
+- Rooms with positioning and sizing (`room ... at (x, y) size (w, h)`)
+- Straight walls and rectangular door openings
+- Canvas definition, grid overlays, and multi-unit projects
+- Inline CSS on any element (backgrounds, gradients, borders, shadows, transforms, filters, animations, custom properties, pseudo-classes/elements)
+- Hierarchy markers (`@1`, `@2`, `@3`) and configuration via `arch.config.json`
+
+### Not Yet Implemented
+
+- **Curves and arcs (Milestone 5)**: door swing arcs, rounded room corners, bezier/spline primitives. Workaround: approximate simple curves with CSS `border-radius`.
+- **Fixtures and furniture (Milestone 3+)**: packaged bathroom/kitchen fixtures and furniture library. Workaround: model fixtures as individual `@draw` components with inline CSS.
+- **Advanced patterns**: hatching and material textures. Workaround: use CSS `repeating-linear-gradient` or image backgrounds.
+- **Annotations**: compass rose, measurement callouts, external labels. Workaround: author auxiliary `@draw` components or pseudo-elements.
+- **3D features (Milestone 4)**: wall heights, multi-level layouts, perspective previews. Workaround: limited CSS `transform: perspective()` effects.
+- **File-based component system (Phase 3)**: parsing for `import`, `export`, and `use` with `.arch` files plus placement transforms. For now keep related definitions in a single file.
+
+### Recommended Authoring Approach
+
+1. Lean on rooms, walls, doors, and inline CSS for most presentations.
+2. Use CSS techniques (border radius, gradients, pseudo-elements) to fill stylistic gaps.
+3. Capture requirements that rely on curves, fixtures, or component composition as roadmap items.
+4. Build a reusable component library incrementally; formal `import`/`use` semantics with `.arch` files will unlock cross-file reuse in Phase 3.
+
+See `examples/LIMITATIONS.md` for the living source of this list. Update both files when limitations change.
+
 ## 11) Roadmap
 
 ### Milestone 1 (weekend-sized):
@@ -1397,3 +1427,350 @@ If you want **utility classes**, you can auto-generate a **Planwind** layer:
 ```
 
 …but keep this optional. The DSL should remain the primary source of truth, and utilities can style/annotate.
+
+## 15) Package Publishing and Distribution
+
+archcss follows a modular package architecture with clear separation of concerns and semantic versioning for stable, predictable releases.
+
+### Package Architecture
+
+The archcss ecosystem is distributed as a collection of focused, composable packages:
+
+#### Core Packages
+
+**@archcss/parser** - Core parsing and compilation
+
+- **Purpose**: Parse `.arch` files and generate compiled models
+- **Size**: ~34KB (zero dependencies)
+- **Exports**: `parse()`, `compile()`, `generateCSS()`, `mount()`
+- **Target**: Node.js and modern browsers
+
+**@archcss/runtime** - DOM mounting and interaction
+
+- **Purpose**: Mount compiled models to DOM with accessibility
+- **Size**: ~15KB (zero dependencies)
+- **Exports**: `mount()`, `unmount()`, `update()`
+- **Target**: Browser environments
+
+#### Build Tool Packages
+
+**@archcss/postcss-plugin** - PostCSS integration
+
+- **Purpose**: Transform `.arch` files in PostCSS pipelines
+- **Exports**: PostCSS plugin function
+- **Target**: Build tools using PostCSS
+
+**@archcss/vite-plugin** - Vite integration
+
+- **Purpose**: Hot module replacement for `.arch` files
+- **Exports**: Vite plugin configuration
+- **Target**: Vite-based projects
+
+**@archcss/eslint-plugin** - Linting and validation
+
+- **Purpose**: ESLint rules for archcss syntax
+- **Exports**: ESLint plugin configuration
+- **Target**: Development environments
+
+### Semantic Versioning Strategy
+
+archcss follows [Semantic Versioning 2.0.0](https://semver.org/) with the format `MAJOR.MINOR.PATCH[-PRERELEASE]`.
+
+#### Version Types
+
+- **Stable releases** (1.0.0+): Production-ready with guaranteed API stability
+- **Beta releases** (0.2.0-beta.x): Feature-complete with minor breaking changes
+- **Alpha releases** (0.1.0-alpha.x): Early development with frequent breaking changes
+
+#### Version Bumping Rules
+
+**Patch (0.1.0 → 0.1.1)**
+
+- Bug fixes
+- Documentation updates
+- Internal improvements
+- No API changes
+
+**Minor (0.1.0 → 0.2.0)**
+
+- New features
+- Enhanced existing features
+- Deprecated features (with migration path)
+- No breaking changes
+
+**Major (0.1.0 → 1.0.0)**
+
+- Breaking API changes
+- Removal of deprecated features
+- Significant architectural changes
+
+#### Pre-release Labels
+
+- `alpha`: Early development, frequent breaking changes
+- `beta`: Feature complete, minor breaking changes
+- `rc`: Release candidate, no breaking changes
+
+### NPM Distribution
+
+#### Package Tags
+
+- `latest`: Stable releases (1.0.0+)
+- `beta`: Beta releases (0.2.0-beta.x)
+- `alpha`: Alpha releases (0.1.0-alpha.x)
+
+#### Installation Commands
+
+```bash
+# Install latest stable
+npm install @archcss/parser
+
+# Install specific version
+npm install @archcss/parser@0.1.0
+
+# Install alpha version
+npm install @archcss/parser@alpha
+
+# Install beta version
+npm install @archcss/parser@beta
+```
+
+#### Package Configuration
+
+Each package includes:
+
+```json
+{
+  "name": "@archcss/parser",
+  "version": "0.1.0-alpha.1",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
+```
+
+### Release Process
+
+#### 1. Development Workflow
+
+```bash
+# Start development
+git checkout -b feature/new-feature
+
+# Make changes and test
+bun test
+bun run build
+
+# Commit changes
+git add .
+git commit -m "feat: add new feature"
+```
+
+#### 2. Release Preparation
+
+```bash
+# Update version using release script
+bun run release:alpha    # 0.1.0-alpha.1 → 0.1.0-alpha.2
+bun run release:beta     # 0.1.0-alpha.1 → 0.1.0-beta.1
+bun run release:stable   # 0.1.0-alpha.1 → 0.1.0
+
+# The script automatically:
+# - Updates package.json files
+# - Updates CHANGELOG.md
+# - Creates git tag
+# - Commits changes
+```
+
+#### 3. Publishing
+
+```bash
+# Navigate to package directory
+cd packages/parser
+
+# Publish with appropriate tag
+npm publish --tag alpha
+npm publish --tag beta
+npm publish  # defaults to latest
+
+# Verify publication
+npm view @archcss/parser versions --json
+```
+
+#### 4. Post-Release
+
+```bash
+# Push changes and tags
+git push origin main --tags
+
+# Create GitHub release
+# - Copy changelog entries
+# - Add release notes
+# - Attach build artifacts
+```
+
+### Quality Gates
+
+#### Alpha Release Criteria
+
+- [ ] All tests passing
+- [ ] Basic functionality working
+- [ ] Documentation updated
+- [ ] No critical bugs
+
+#### Beta Release Criteria
+
+- [ ] Feature complete
+- [ ] Performance benchmarks met
+- [ ] User feedback incorporated
+- [ ] Migration guides available
+
+#### Stable Release Criteria
+
+- [ ] Production ready
+- [ ] Full documentation
+- [ ] Long-term support commitment
+- [ ] Backward compatibility guaranteed
+
+### Package Compatibility
+
+| Parser Version | Runtime Version | Editor Version | Status  |
+| -------------- | --------------- | -------------- | ------- |
+| 0.1.0-alpha.1  | 0.1.0-alpha.1   | 0.1.0-alpha.1  | Current |
+| 0.1.0          | 0.1.0           | 0.1.0          | Planned |
+| 0.2.0          | 0.2.0           | 0.2.0          | Planned |
+
+### Migration Guides
+
+#### From 0.1.0-alpha.1 to 0.1.0
+
+- No breaking changes expected
+- Enhanced online editor features
+- Improved documentation
+
+#### From 0.1.0 to 0.2.0
+
+- File-based component system API changes
+- Enhanced pattern syntax
+- Build tool integration changes
+
+### Release Schedule
+
+- **Alpha releases**: Every 2 weeks during active development
+- **Beta releases**: Monthly during stabilization
+- **Stable releases**: Quarterly or when feature complete
+
+### Package Maintenance
+
+#### Security Updates
+
+- Critical security fixes released immediately
+- Patch versions for non-critical security updates
+- Security advisories published on GitHub
+
+#### Bug Fixes
+
+- Bug fixes released in patch versions
+- Backporting to previous major versions when possible
+- Comprehensive testing before release
+
+#### Feature Updates
+
+- New features in minor versions
+- Deprecation warnings before breaking changes
+- Migration guides for major version upgrades
+
+### Distribution Channels
+
+#### NPM Registry
+
+- Primary distribution channel
+- Automatic dependency resolution
+- Version management and updates
+
+#### GitHub Releases
+
+- Source code and build artifacts
+- Release notes and changelog
+- Pre-release and stable versions
+
+#### CDN Distribution
+
+- Unpkg: `https://unpkg.com/@archcss/parser@latest`
+- jsDelivr: `https://cdn.jsdelivr.net/npm/@archcss/parser@latest`
+- Skypack: `https://cdn.skypack.dev/@archcss/parser`
+
+### Developer Experience
+
+#### TypeScript Support
+
+- Full type definitions included
+- IntelliSense and autocomplete
+- Compile-time error checking
+
+#### Documentation
+
+- Comprehensive API documentation
+- Interactive examples
+- Migration guides and tutorials
+
+#### Testing
+
+- Unit tests for all packages
+- Integration tests for workflows
+- Visual regression tests for editor
+
+### Community and Support
+
+#### Issue Tracking
+
+- GitHub Issues for bug reports
+- GitHub Discussions for questions
+- Feature requests and RFCs
+
+#### Contributing
+
+- Clear contribution guidelines
+- Code of conduct
+- Pull request templates
+
+#### Support Channels
+
+- GitHub Discussions
+- Discord community (planned)
+- Stack Overflow tag: `archcss`
+
+This publishing strategy ensures archcss packages are reliable, well-documented, and easy to use across different environments and use cases.
+
+### Current Release Status
+
+**v0.1.0-alpha.1** - First alpha release
+
+- ✅ Core parser with tokenizer and AST generation
+- ✅ CSS generator with custom properties and grid system
+- ✅ Runtime library (~34KB, zero dependencies)
+- ✅ Interactive online editor with live preview
+- ✅ Support for rooms, walls, doors, and repeat patterns
+- ✅ Hierarchy markers and configuration system
+- ✅ 33/33 tests passing, <5ms compilation time
+- ✅ NPM package ready for publishing
+
+**Next Release: v0.1.0** - Stable alpha
+
+- [ ] Documentation site deployment
+- [ ] NPM package publishing
+- [ ] Community feedback collection
+
+**Future: v0.2.0** - Beta release
+
+- [ ] File-based component system (`import`, `use` with `.arch` files)
+- [ ] VS Code extension
+- [ ] Build tool plugins (Vite, PostCSS)

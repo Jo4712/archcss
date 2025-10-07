@@ -1,4 +1,4 @@
-# ArchCSS Roadmap
+# archcss Roadmap
 
 ## ✅ Completed (v0.1)
 
@@ -48,7 +48,7 @@
 
 ## 🚧 In Progress
 
-### Component System (Phase 3)
+### File-based Component System (Phase 3)
 
 - ⏳ `@draw` definitions
 - ⏳ `import` statements (implicit file resolution)
@@ -58,7 +58,7 @@
 
 ## 📋 Planned
 
-### Phase 3: Component System (Week 5-6)
+### Phase 3: File-based Component System (Week 5-6)
 
 **Goal**: Reusable components across files
 
@@ -95,7 +95,7 @@
   - Live syntax highlighting in browser editor
   - Color scheme: green for keywords, orange for numbers
   - CodeMirror or Monaco integration
-  - Custom ArchCSS language mode
+  - Custom archcss language mode
 
 - [ ] **VS Code Extension**
   - TextMate grammar for syntax highlighting
@@ -201,7 +201,7 @@
 - [ ] **Documentation Site (`/docs`)**
   - Getting started guide
   - API reference with examples
-  - Component system tutorial
+  - File-based component system tutorial
   - Interactive code playground embeds
   - Best practices guide
 
@@ -233,7 +233,7 @@
 
 ### v0.2 (Next 2 weeks)
 
-- Component system working
+- File-based component system working
 - Syntax highlighting in editor
 - Better error messages
 

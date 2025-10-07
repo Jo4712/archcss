@@ -1,4 +1,4 @@
-# ArchCSS Development Log
+# archcss Development Log
 
 > Tracking key decisions, milestones, and design choices
 
@@ -27,7 +27,6 @@
   - No marker = grey at bottom of picker
 - **Status**: Documented in specification with Figma reference
 
-
 ### ✅ Configuration System: `arch.config.json`
 
 - **Decided**: Support project-wide and per-file configuration
@@ -47,10 +46,9 @@
 ### ✅ Documentation Structure
 
 - **Files**:
-  - `specification.md` - Complete language specification
+  - `specification.md` - Complete language specification (includes component system)
   - `project-plan.md` - Project overview and status
   - `ROADMAP.md` - Development roadmap and milestones
-  - `COMPONENTS.md` - Component system documentation
   - `LOG.md` - This file - decision tracking
 - **Status**: All files kept in sync
 
@@ -86,13 +84,13 @@ _This log is updated as major decisions are made. For implementation details, se
 ### ✅ CSS-First Philosophy (Manifesto)
 
 - **Decided**: Use standard CSS wherever possible; invent syntax only when necessary
-- **Rationale**: 
+- **Rationale**:
   - Developers already know CSS
   - Access to all CSS features (current and future)
   - Future-proof and standards-based
   - Minimal learning curve
 - **Approach**:
-  - ArchCSS provides: spatial positioning, composition, hierarchy
+  - archcss provides: spatial positioning, composition, hierarchy
   - Everything else is standard CSS: colors, borders, margins, transforms, animations, etc.
   - Use `margin: 0.5U;` instead of custom directives
   - Use `background: yellow;` instead of proprietary syntax
@@ -105,7 +103,7 @@ _This log is updated as major decisions are made. For implementation details, se
 
 - **Decided**: Support any CSS property directly within blocks
 - **Syntax**: `room id at (x,y) size (w,h) { property: value; }`
-- **Rationale**: 
+- **Rationale**:
   - More powerful and flexible than custom directives
   - Familiar to all web developers
   - Access to full CSS specification
@@ -153,6 +151,7 @@ _This log is updated as major decisions are made. For implementation details, se
 ### 🔧 Technical Changes
 
 **Files Modified:**
+
 - `packages/parser/src/parser.ts` - Added CSS property parsing
 - `packages/parser/src/types.ts` - Added css field to Room and CompiledModel
 - `packages/parser/src/compiler.ts` - Pass through CSS properties
@@ -160,8 +159,9 @@ _This log is updated as major decisions are made. For implementation details, se
 - `index.html` - Added new example file buttons and loading logic
 
 **Build Status:**
+
 - JavaScript bundle: ✅ Built successfully (33.77 KB)
-- TypeScript types: ⚠️  Some strict type warnings (non-blocking)
+- TypeScript types: ⚠️ Some strict type warnings (non-blocking)
 - Runtime: ✅ Functional
 - Examples: ✅ Ready to test
 

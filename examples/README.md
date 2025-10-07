@@ -1,8 +1,8 @@
-# ArchCSS Examples
+# archcss Examples
 
 This directory contains example `.arch` files demonstrating various features.
 
-## Plans (`/plans`)
+## Drawings (`/drawings`)
 
 ### `home.arch` - Basic Example
 
@@ -28,7 +28,7 @@ Recreation of a realistic ground floor plan based on actual architectural drawin
 
 ### `css-styling-demo.arch` - CSS Properties Showcase ✨ NEW
 
-Demonstrates the full power of inline CSS properties in ArchCSS.
+Demonstrates the full power of inline CSS properties in archcss.
 
 **Features demonstrated:**
 
@@ -56,7 +56,7 @@ room kitchen {
 ### Other Examples
 
 - `home-with-windows.arch` - Uses repeat patterns for window placement
-- `house-components.arch` - Component import system demo
+- `house-components.arch` - File-based component system demo
 - `office-building.arch` - Larger scale building
 - `repeat-test.arch` - Repeat pattern variations
 - `clean-syntax.arch` - Unitless number syntax demo
@@ -120,7 +120,7 @@ Mark components with `@1`, `@2`, `@3`:
 
 ### Unified `@draw` Syntax
 
-Everything uses `@draw` instead of `@plan`/`@component`:
+Everything uses `@draw` for component definitions:
 
 ```javascript
 @1;
@@ -145,4 +145,3 @@ Currently: **32/32 tests passing** ✅
 
 _For full specification, see `/specification.md`_
 _For roadmap and upcoming features, see `/ROADMAP.md`_
-

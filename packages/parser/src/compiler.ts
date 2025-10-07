@@ -1,5 +1,5 @@
 /**
- * Compiler for ArchCSS
+ * Compiler for archcss
  * Converts AST to a compiled model ready for CSS generation and runtime
  */
 
@@ -143,8 +143,7 @@ export class Compiler {
         const x = repeat.x1 + dx * t;
         const y = repeat.y1 + dy * t;
 
-        // For now, create a small room to represent the repeated component
-        // This is a placeholder until we have the full component system
+        // TODO(specification.md §Modules, imports, and composition; project-plan.md Next Steps #2): Replace placeholder rooms with instantiated components once the file-based component system is available.
         this.ast.rooms.push({
           type: "Room",
           id: `${repeat.component.toLowerCase()}_${i}`,
@@ -168,6 +167,7 @@ export class Compiler {
 
     // Expand repeat patterns before compilation
     this.expandRepeats();
+    // TODO(specification.md §Roadmap Milestone 2; project-plan.md Phase 5): Run overlap and bounds validation before emitting the compiled model.
 
     // Convert canvas to grid columns/rows
     const canvasCols = this.toBaseUnit(

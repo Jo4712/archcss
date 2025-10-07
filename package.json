@@ -1,6 +1,6 @@
 {
   "name": "@plancss/monorepo",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.1",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -14,7 +14,14 @@
     "test:visual": "playwright test",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "release": "bun run scripts/release.js",
+    "release:patch": "bun run scripts/release.js patch",
+    "release:minor": "bun run scripts/release.js minor",
+    "release:major": "bun run scripts/release.js major",
+    "release:alpha": "bun run scripts/release.js alpha",
+    "release:beta": "bun run scripts/release.js beta",
+    "release:stable": "bun run scripts/release.js stable"
   },
   "devDependencies": {
     "@types/bun": "latest",

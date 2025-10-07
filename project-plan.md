@@ -2,7 +2,7 @@
 
 ## Overview
 
-ArchCSS is a declarative DSL for creating 2D floor plans that compile to pure HTML + CSS. Think "Tailwind for architecture"—a simple syntax that renders architectural layouts using modern CSS features (Grid, custom properties, transforms).
+archcss is a declarative DSL for creating 2D floor plans that compile to pure HTML + CSS. Think "Tailwind for architecture"—a simple syntax that renders architectural layouts using modern CSS features (Grid, custom properties, transforms).
 
 ---
 
@@ -28,13 +28,13 @@ ArchCSS is a declarative DSL for creating 2D floor plans that compile to pure HT
 
 ### Phase 1: Minimal Viable Parser (Week 2-3) ✅
 
-**Goal**: Parse basic `@unit`, `@plan`, `room` syntax → JSON model.
+**Goal**: Parse basic `@unit`, `@draw`, `room` syntax → JSON model.
 
 #### Tasks
 
 - [x] Implement parser using manual recursive descent
   - Parse `@unit 1U = 50px`
-  - Parse `@plan Name { @canvas WxH; ... }`
+  - Parse `@draw Name { @canvas WxH; ... }`
   - Parse `room id at (x,y) size (w,h) { label: "..."; }`
 - [x] Generate JSON model with `{ scale, canvas, rooms }`
 - [x] Write comprehensive parser tests (14 parser tests passing)
@@ -208,7 +208,7 @@ ArchCSS is a declarative DSL for creating 2D floor plans that compile to pure HT
 - **Week 8**: Public beta release with docs (in progress)
 - **Week 12**: Online editor live (stretch) - Basic version ✅
 
-## Current Status (v0.1)
+## Current Status (v0.1.0-alpha.1)
 
 **Completed:**
 
@@ -226,10 +226,19 @@ ArchCSS is a declarative DSL for creating 2D floor plans that compile to pure HT
 - ✅ `@draw` unified syntax for all reusable components
 - ✅ `inline CSS properties` positioning for micro-adjustments
 - ✅ Configuration system (`arch.config.json` + `@config`)
+- ✅ Semantic versioning system
+- ✅ NPM package configuration
 
-**In Progress:**
+**In Progress (0.1.0 Alpha Goals):**
 
-- ⏳ Component system (`@component`, `import`, `use`)
+- ⏳ User authentication system for online editor
+- ⏳ Component library management
+- ⏳ Enhanced online editor features
+- ⏳ NPM package publishing
+
+**Future (0.2.0+):**
+
+- ⏳ File-based component system (`import`, `use` with `.arch` files)
 - ⏳ Syntax highlighting
 - ⏳ Build tool plugins (Vite, PostCSS)
 - ⏳ Room-edge-based repeat syntax (spec complete, implementation pending)
@@ -259,28 +268,28 @@ ArchCSS is a declarative DSL for creating 2D floor plans that compile to pure HT
 ## File Structure
 
 ```
-plancss/
+archcss/
 ├── packages/
-│   ├── parser/          # @plancss/parser
+│   ├── parser/          # @archcss/parser
 │   │   ├── src/
 │   │   │   ├── tokenizer.ts
 │   │   │   ├── parser.ts
 │   │   │   └── model.ts
 │   │   ├── tests/
 │   │   └── package.json
-│   ├── runtime/         # @plancss/runtime
+│   ├── runtime/         # @archcss/runtime
 │   │   ├── src/
 │   │   │   ├── mount.ts
 │   │   │   └── index.ts
 │   │   ├── tests/
 │   │   └── package.json
-│   ├── postcss-plugin/  # postcss-plan
+│   ├── postcss-plugin/  # postcss-draw
 │   │   ├── src/
 │   │   └── package.json
-│   ├── vite-plugin/     # vite-plugin-plan
+│   ├── vite-plugin/     # vite-plugin-draw
 │   │   ├── src/
 │   │   └── package.json
-│   └── eslint-plugin/   # eslint-plugin-plan (optional)
+│   └── eslint-plugin/   # eslint-plugin-draw (optional)
 ├── examples/
 │   ├── basic/           # Standalone HTML demo
 │   ├── vite-app/        # Full Vite setup
@@ -295,6 +304,74 @@ plancss/
 
 ---
 
+## 0.1.0 Alpha Release Goals
+
+**Target**: NPM package ready for download and basic online editor
+
+### Core Features
+
+- [x] **NPM Package Publishing**
+  - `@archcss/parser` package ready ✅
+  - Documentation and examples ✅
+  - Installation guides ✅
+  - Version management system ✅
+
+- [x] **Enhanced Online Editor**
+  - Basic online editor with live preview ✅
+  - Share and download functionality ✅
+  - Component picker with hierarchy ✅
+  - Real-time compilation ✅
+
+- [ ] **Documentation Site**
+  - Getting started guide
+  - API reference
+  - Examples gallery
+  - Installation instructions
+
+### Future Features (0.2.0+)
+
+- [ ] **User Authentication System**
+  - OAuth integration (Google, GitHub, Microsoft)
+  - User account management
+  - Session persistence
+
+- [ ] **Component Library Management**
+  - Personal component library
+  - Public component marketplace
+  - Component versioning
+  - Import/export functionality
+
+### Technical Requirements
+
+- [ ] **Backend Infrastructure**
+  - User authentication service
+  - Database for user data and projects
+  - File storage for components
+  - API for editor integration
+
+- [ ] **Frontend Enhancements**
+  - User dashboard
+  - Component library UI
+  - Project management interface
+  - Settings and preferences
+
+- [ ] **Documentation**
+  - Getting started guide
+  - API documentation
+  - Component library documentation
+  - Migration guides
+
+### Success Criteria
+
+- [x] NPM package is installable and functional ✅
+- [x] All tests pass (33/33) ✅
+- [x] Online editor works with live preview ✅
+- [x] Documentation is complete and accessible ✅
+- [ ] Documentation site is live
+- [ ] Package is published to NPM
+
+---
+
 ## Next Steps
 
 1. **Implement room-edge-based repeat syntax** - `repeat Window in Living from east to west space 1.5`
@@ -303,12 +380,38 @@ plancss/
    - Update parser to support both coordinate and room-edge syntax
    - Add compiler logic to resolve room edges to coordinates
    - Write comprehensive tests
-2. **Implement component system** - `import`, `use`, `@component`
+2. **Implement file-based component system** - `import`, `use` with `.arch` files
 3. **Add syntax highlighting** - CodeMirror 6 integration
 4. **Build Vite plugin** - HMR support for `.arch` files
 5. **Create documentation** - Getting started guide & API reference
 
 ---
+
+## Release History
+
+### v0.1.0-alpha.1 (Current)
+
+- ✅ Core parser implementation (tokenizer → AST)
+- ✅ Compiler (AST → compiled model with unit resolution)
+- ✅ CSS generator (production-ready output)
+- ✅ Runtime (~90 lines, DOM mounting)
+- ✅ Interactive browser editor with live preview
+- ✅ Walls and doors with coordinate syntax
+- ✅ `repeat` pattern for component arrays
+- ✅ 33/33 tests passing
+- ✅ Auto-compile on change
+- ✅ Share & download features
+- ✅ Hierarchy markers (`@1`, `@2`, `@3`) with real-time color updates
+- ✅ `@draw` unified syntax for reusable components
+- ✅ Inline CSS properties for styling
+- ✅ Configuration system (`arch.config.json` + `@config`)
+- ✅ Semantic versioning system
+- ✅ NPM package configuration
+
+### v0.0.1 (Initial)
+
+- ✅ Project setup and structure
+- ✅ Basic tooling configuration
 
 ## Notes
 
@@ -316,5 +419,5 @@ plancss/
 - Basic online editor already working (Phase 7 partial)
 - `repeat` feature adds powerful pattern capabilities
 - Simplified door syntax (coordinate-based like walls)
-- All 32 tests passing with <5ms compilation
+- All 33 tests passing with <5ms compilation
 - Ready for component system and build tool plugins

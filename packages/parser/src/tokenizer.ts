@@ -1,5 +1,5 @@
 /**
- * Tokenizer for ArchCSS (.arch files)
+ * Tokenizer for archcss (.arch files)
  * Breaks source code into tokens for the parser
  */
 
@@ -101,6 +101,8 @@ const KEYWORDS: Record<string, TokenType> = {
   "@canvas": TokenType.AT_CANVAS,
   "@grid": TokenType.AT_GRID,
   "@module": TokenType.AT_MODULE,
+  // TODO(specification.md §Configuration; project-plan.md Next Steps #1): Add `@config` keyword once configuration directives are parsed.
+  // TODO(project-plan.md Next Steps #2): Add `import` and `use` keywords to support the file-based component system.
 
   // Primitives
   room: TokenType.ROOM,
@@ -198,7 +200,6 @@ export class Tokenizer {
   }
 
   private readComment(): void {
-    const start = this.makePosition();
     this.advance(); // /
     this.advance(); // *
 
@@ -283,7 +284,7 @@ export class Tokenizer {
     // Check for @ prefix (at-rules)
     if (this.current === "@") {
       value += this.advance();
-      
+
       // Check if it's a hierarchy marker like @1, @2, @3
       if (/\d/.test(this.current)) {
         while (/\d/.test(this.current)) {

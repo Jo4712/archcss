@@ -1,5 +1,5 @@
 /**
- * Core types for ArchCSS AST and model
+ * Core types for archcss AST and model
  */
 
 export interface Position {
@@ -81,6 +81,7 @@ export interface Grid extends BaseNode {
   alpha?: number;
 }
 
+// TODO(project-plan.md Next Steps #2; specification.md §Modules, imports, and composition): Add ImportDeclaration and UsePlacement types for file-based component system.
 // Module
 export interface ModuleDeclaration extends BaseNode {
   type: "ModuleDeclaration";
@@ -132,9 +133,9 @@ export interface RepeatPattern extends BaseNode {
   unit: string;
 }
 
-// Plan
+// Draw block (primary top-level definition)
 export interface Plan extends BaseNode {
-  type: "Plan";
+  type: "Draw";
   name: string;
   canvas: Canvas;
   units: UnitDeclaration[];

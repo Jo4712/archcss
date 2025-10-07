@@ -1,5 +1,5 @@
 /**
- * Parser for ArchCSS
+ * Parser for archcss
  * Converts tokens into an AST
  */
 
@@ -36,7 +36,7 @@ export class Parser {
   private get current(): Token {
     const token = this.tokens[this.pos];
     if (!token && this.tokens.length > 0) {
-      return this.tokens[this.tokens.length - 1];
+      return this.tokens[this.tokens.length - 1]!;
     }
     return (
       token || {
@@ -51,7 +51,7 @@ export class Parser {
   private peek(offset = 1): Token {
     const token = this.tokens[this.pos + offset];
     if (!token && this.tokens.length > 0) {
-      return this.tokens[this.tokens.length - 1];
+      return this.tokens[this.tokens.length - 1]!;
     }
     return (
       token || {
@@ -304,6 +304,7 @@ export class Parser {
     const from = this.parseCoordinate();
     this.expect(TokenType.TO);
     const to = this.parseCoordinate();
+    // TODO(specification.md §Repeat patterns and room-edge syntax; project-plan.md Next Steps #1): Support room-edge repeat syntax (e.g. `repeat Window in Living along north space 2U`).
 
     this.expect(TokenType.SPACE);
     const spacing = this.parseNumberWithUnit();
@@ -406,7 +407,7 @@ export class Parser {
     };
   }
 
-  // Parse @plan
+  // Parse @draw block (formerly @plan)
   private parsePlan(): Plan {
     const start = this.current.start;
 
@@ -423,7 +424,7 @@ export class Parser {
       };
     }
 
-    // Collect top-level declarations before @plan
+    // Collect top-level declarations before @draw
     const units: UnitDeclaration[] = [];
     const imports: ImportDeclaration[] = [];
     const exports: ExportDeclaration[] = [];
@@ -438,12 +439,13 @@ export class Parser {
       } else if (this.match(TokenType.AT_UNIT)) {
         units.push(this.parseUnitDeclaration());
       } else if (this.match(TokenType.IMPORT)) {
-        // TODO: Parse import
+        // TODO(specification.md §Modules, imports, and composition; project-plan.md Phase 3): Parse import declarations and populate the AST instead of skipping them.
         this.advance();
       } else if (this.match(TokenType.EXPORT)) {
-        // TODO: Parse export
+        // TODO(specification.md §Modules, imports, and composition; project-plan.md Phase 3): Capture export metadata so component modules can be emitted.
         this.advance();
       } else {
+        // TODO(specification.md §Configuration; project-plan.md Next Steps #1): Recognize @config blocks before @draw rather than flagging them as unexpected tokens.
         this.error(`Unexpected token: ${this.current.type}`);
         this.advance();
       }
@@ -460,11 +462,11 @@ export class Parser {
     }
 
     if (!canvas) {
-      this.error("@canvas is required inside @plan");
+      this.error("@canvas is required inside @draw");
       canvas = { width: 10, height: 10, unit: "U" };
     }
 
-    // Parse plan body
+    // Parse draw body
     const rooms: Room[] = [];
     const walls: Wall[] = [];
     const doors: Door[] = [];
@@ -482,12 +484,12 @@ export class Parser {
       } else if (this.match(TokenType.AT_GRID)) {
         grids.push(this.parseGrid());
       } else if (this.match(TokenType.USE)) {
-        // TODO: Parse use
+        // TODO(specification.md §Modules, imports, and composition; project-plan.md Phase 3): Parse use placements so imported .arch files can be instantiated with transforms.
         this.advance();
       } else if (this.match(TokenType.REPEAT)) {
         repeats.push(this.parseRepeat());
       } else {
-        this.error(`Unexpected token in plan body: ${this.current.type}`);
+        this.error(`Unexpected token in draw body: ${this.current.type}`);
         this.advance();
       }
     }
@@ -495,7 +497,7 @@ export class Parser {
     this.expect(TokenType.RBRACE);
 
     return {
-      type: "Plan",
+      type: "Draw",
       name,
       canvas,
       units,

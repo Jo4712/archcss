@@ -7,7 +7,7 @@ describe("Parser", () => {
     const source = `
       @unit U = 50px;
       
-      @plan Test {
+      @draw Test {
         @canvas 10U x 10U;
       }
     `;
@@ -21,11 +21,11 @@ describe("Parser", () => {
     expect(result.ast.units[0].unit).toBe("px");
   });
 
-  it("should parse basic plan with canvas", () => {
+  it("should parse basic draw with canvas", () => {
     const source = `
       @unit U = 48px;
       
-      @plan MyHome {
+      @draw MyHome {
         @canvas 18U x 10U;
       }
     `;
@@ -42,11 +42,11 @@ describe("Parser", () => {
     expect(result.ast.units[0].value).toBe(48);
   });
 
-  it("should parse plan with room", () => {
+  it("should parse draw with room", () => {
     const source = `
       @unit U = 48px;
       
-      @plan MyHome {
+      @draw MyHome {
         @canvas 18U x 10U;
         
         room living at (1U, 1U) size (6U, 4U) {
@@ -74,7 +74,7 @@ describe("Parser", () => {
     const source = `
       @unit U = 48px;
       
-      @plan MyHome {
+      @draw MyHome {
         @canvas 18U x 10U;
         
         room living at (1U, 1U) size (6U, 4U) {
@@ -99,7 +99,7 @@ describe("Parser", () => {
     const source = `
       @unit U = 48px;
       
-      @plan MyHome {
+      @draw MyHome {
         @canvas 18U x 10U;
         
         wall from (1U, 5U) to (13U, 5U);
@@ -123,7 +123,7 @@ describe("Parser", () => {
     const source = `
       @unit U = 48px;
       
-      @plan MyHome {
+      @draw MyHome {
         @canvas 18U x 10U;
         
         door from (7U, 2U) to (7U, 3U) width 0.9U;
@@ -147,7 +147,7 @@ describe("Parser", () => {
     const source = `
       @unit U = 48px;
       
-      @plan MyHome {
+      @draw MyHome {
         @canvas 18U x 10U;
         @grid grid size 1U;
       }
@@ -169,7 +169,7 @@ describe("Parser", () => {
     const source = `
       @unit U = 48px;
 
-      @plan MyHome {
+      @draw MyHome {
         @canvas 18U x 10U;
         
         room living at (1U, 1U) size (6U, 4U) {
@@ -205,7 +205,7 @@ describe("Parser", () => {
     const source = `
       @unit U = 48px;
       
-      @plan MyHome {
+      @draw MyHome {
         @canvas 18U x 10U;
         
         door from (7.5U, 2U) to (7.5U, 3U) width 0.9U;
@@ -223,7 +223,7 @@ describe("Parser", () => {
     const source = `
       @unit U = 48px;
       
-      @plan MyHome {
+      @draw MyHome {
         @canvas 18U x 10U;
         
         room living at (1U, 1U) size (6U, 4U);
@@ -239,7 +239,7 @@ describe("Parser", () => {
 
   it("should handle errors gracefully", () => {
     const source = `
-      @plan MyHome {
+      @draw MyHome {
         invalid syntax here
       }
     `;
@@ -255,7 +255,7 @@ describe("Parser", () => {
       @unit cm = 37.795px;
       @unit m = 100cm;
       
-      @plan Studio {
+      @draw Studio {
         @canvas 12m x 8m;
       }
     `;
@@ -273,7 +273,7 @@ describe("Parser", () => {
     const source = `
       @unit U = 50px;
       
-      @plan Test {
+      @draw Test {
         @canvas 10U x 10U;
         
         repeat Window from (0U, 0U) to (8U, 0U) space 2U;
@@ -299,7 +299,7 @@ describe("Parser", () => {
     const source = `
       @unit U = 50px;
       
-      @plan Test {
+      @draw Test {
         @canvas 10U x 10U;
         
         repeat Window from (0U, 0U) to (0U, 10U) space 1.5U;
@@ -323,7 +323,7 @@ describe("Parser", () => {
     const source = `
       @unit = 50px;
       
-      @plan CleanHome {
+      @draw CleanHome {
         @canvas 20 x 10;
         
         room living at (1, 1) size (6, 4) {

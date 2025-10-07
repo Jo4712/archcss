@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ArchCSS Demo - Floor Plan Viewer</title>
+    <title>archcss Demo - Floor Plan Viewer</title>
     <style>
       * {
         margin: 0;
@@ -379,7 +379,7 @@
 
       let styleElement = null;
 
-      function compileArchCSS() {
+      function compilearchcss() {
         const source = editor.value;
 
         try {
@@ -426,13 +426,13 @@
       }
 
       // Initial compile
-      compileArchCSS();
+      compilearchcss();
 
       // Auto-compile on change with debounce
       let compileTimeout = null;
       editor.addEventListener("input", () => {
         clearTimeout(compileTimeout);
-        compileTimeout = setTimeout(compileArchCSS, 500);
+        compileTimeout = setTimeout(compilearchcss, 500);
       });
 
       // Handle tab key
@@ -466,7 +466,7 @@
             try {
               const source = await fetch(filePath).then((r) => r.text());
               editor.value = source;
-              compileArchCSS();
+              compilearchcss();
             } catch (error) {
               console.error(`Failed to load ${file}:`, error);
               alert(`Failed to load ${file}`);
@@ -503,7 +503,7 @@
       if (codeParam) {
         try {
           editor.value = atob(codeParam);
-          compileArchCSS();
+          compilearchcss();
         } catch (e) {
           console.error("Failed to decode URL parameter");
         }

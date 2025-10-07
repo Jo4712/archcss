@@ -1,26 +1,26 @@
-/* Reusable door component */
+/* Reusable door components */
 
-@component door.standard {
+@draw DoorStandard {
   /* Standard door - 1U wide */
-  shape door at (0U, 0U) size (1U, 0.1U) {
+  room door at (0U, 0U) size (1U, 0.1U) {
     background: white;
     border: 2px solid #4080ff;
     label: "Door";
   }
 }
 
-@component door.wide {
+@draw DoorWide {
   /* Wide door - 1.5U wide */
-  shape door at (0U, 0U) size (1.5U, 0.1U) {
+  room door at (0U, 0U) size (1.5U, 0.1U) {
     background: white;
     border: 2px solid #4080ff;
     label: "Wide Door";
   }
 }
 
-@component door.double {
+@draw DoorDouble {
   /* Double door - 2U wide */
-  shape door at (0U, 0U) size (2U, 0.1U) {
+  room door at (0U, 0U) size (2U, 0.1U) {
     background: white;
     border: 2px dashed #4080ff;
     label: "Double Door";

@@ -4,11 +4,11 @@ import { parse } from "../src/parser.js";
 import { compile } from "../src/compiler.js";
 
 describe("Compiler", () => {
-  it("should compile basic plan to model", () => {
+  it("should compile basic draw to model", () => {
     const source = `
       @unit U = 50px;
       
-      @plan Test {
+      @draw Test {
         @canvas 10U x 8U;
         
         room living at (1U, 1U) size (4U, 3U) {
@@ -37,7 +37,7 @@ describe("Compiler", () => {
     const source = `
       @unit U = 50px;
       
-      @plan Test {
+      @draw Test {
         @canvas 10U x 10U;
         wall from (0U, 0U) to (5U, 0U);
         wall from (0U, 0U) to (0U, 5U);
@@ -73,7 +73,7 @@ describe("Compiler", () => {
       @unit cm = 37.795px;
       @unit m = 100cm;
       
-      @plan Test {
+      @draw Test {
         @canvas 10m x 8m;
         
         room living at (1m, 1m) size (4m, 3m) {
@@ -102,7 +102,7 @@ describe("Compiler", () => {
     const source = `
       @unit U = 48px;
       
-      @plan Test {
+      @draw Test {
         @canvas 10U x 10U;
         @grid grid size 1U color #ccc alpha 0.15;
       }
@@ -124,7 +124,7 @@ describe("Compiler", () => {
     const source = `
       @unit U = 48px;
 
-      @plan MyHome {
+      @draw MyHome {
         @canvas 18U x 10U;
         @grid grid size 1U color #ccc alpha 0.15;
         
@@ -164,7 +164,7 @@ describe("Compiler", () => {
     const source = `
       @unit U = 50px;
       
-      @plan Test {
+      @draw Test {
         @canvas 10U x 10U;
         
         /* Repeat windows from 0 to 8 with spacing 2 */
@@ -200,7 +200,7 @@ describe("Compiler", () => {
     const source = `
       @unit U = 50px;
       
-      @plan Test {
+      @draw Test {
         @canvas 10U x 10U;
         
         repeat Window from (0U, 0U) to (0U, 6U) space 2U;

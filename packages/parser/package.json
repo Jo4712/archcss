@@ -1,8 +1,8 @@
 {
   "name": "@archcss/parser",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.1",
   "type": "module",
-  "description": "Parser for ArchCSS (.arch) files",
+  "description": "Parser for archcss (.arch) files",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -21,12 +21,23 @@
   "keywords": [
     "archcss",
     "parser",
-    "floor-plan",
     "architecture",
     "css"
   ],
-  "author": "",
+  "author": "archcss",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/archcss/archcss.git",
+    "directory": "packages/parser"
+  },
+  "bugs": {
+    "url": "https://github.com/Jo4712/archcss/issues"
+  },
+  "homepage": "https://archcss.dev",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "typescript": "^5.3.0",
