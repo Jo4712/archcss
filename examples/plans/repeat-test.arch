@@ -1,0 +1,21 @@
+/* Test repeat feature */
+
+@unit U = 50px;
+
+@plan RepeatTest {
+  @canvas 20U x 10U;
+  @grid grid size 1U color #ddd alpha 0.2;
+  
+  room living at (2U, 2U) size (10U, 6U) {
+    label: "Living Room";
+  }
+  
+  /* Horizontal window pattern along top */
+  repeat Window from (3U, 2U) to (11U, 2U) space 2U;
+  
+  /* Vertical window pattern along left */
+  repeat Window from (2U, 3U) to (2U, 7U) space 1.5U;
+  
+  wall from (2U, 1U) to (12U, 1U);
+}
+

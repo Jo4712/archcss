@@ -1,0 +1,64 @@
+/* Office building with repeating window patterns */
+
+@unit U = 50px;
+
+/* Import components - implicit resolution */
+import Window;
+import Door;
+
+@plan OfficeBuilding {
+  @canvas 30U x 15U;
+  @grid grid size 1U color #e0e0e0 alpha 0.15;
+  
+  /* Main office space with window wall */
+  room office at (2U, 2U) size (12U, 6U) {
+    label: "Open Office";
+    
+    /* North wall - repeat windows every 2U */
+    repeat Window from (1U, 0U) to (11U, 0U) space 2U;
+    
+    /* East wall - vertical windows */
+    repeat Window from (12U, 1U) to (12U, 5U) space 1.5U;
+    
+    /* Single door on west wall */
+    use Door at (0U, 3U);
+  }
+  
+  /* Conference room with evenly spaced windows */
+  room conference at (16U, 2U) size (8U, 6U) {
+    label: "Conference Room";
+    
+    /* South wall - large window pattern */
+    repeat Window from (1U, 6U) to (7U, 6U) space 1.5U;
+    
+    /* Door on west wall */
+    use Door at (0U, 3U);
+  }
+  
+  /* Hallway with repeating doors to offices */
+  room hallway at (2U, 10U) size (20U, 3U) {
+    label: "Hallway";
+    
+    /* Small windows along north wall */
+    repeat Window from (2U, 0U) to (18U, 0U) space 3U;
+  }
+  
+  /* Small offices with uniform layout */
+  room office1 at (26U, 2U) size (3U, 4U) {
+    label: "Office 1";
+    repeat Window from (0U, 0U) to (3U, 0U) space 1.5U;
+    use Door at (0U, 2U);
+  }
+  
+  room office2 at (26U, 7U) size (3U, 4U) {
+    label: "Office 2";
+    repeat Window from (0U, 0U) to (3U, 0U) space 1.5U;
+    use Door at (0U, 2U);
+  }
+  
+  /* Walls */
+  wall from (2U, 9U) to (24U, 9U);   /* Hallway divider */
+  wall from (15U, 2U) to (15U, 8U);  /* Office partition */
+  wall from (25U, 2U) to (25U, 11U); /* Side offices */
+}
+

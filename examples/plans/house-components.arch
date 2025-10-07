@@ -1,0 +1,72 @@
+/* Complete house using reusable components */
+
+@unit U = 50px;
+
+/* Import reusable components */
+import window from "../components/window.arch";
+import { door.standard, door.wide } from "../components/door.arch";
+
+@plan ModernHouse {
+  @canvas 20U x 12U;
+  @grid grid size 1U color #ddd alpha 0.2;
+  
+  /* Living room with multiple windows */
+  room living at (1U, 1U) size (8U, 5U) {
+    label: "Living Room";
+    
+    /* Windows on north wall */
+    use window at (2U, 0U);
+    use window at (4U, 0U);
+    use window at (6U, 0U);
+    
+    /* Window on west wall */
+    use window at (0U, 2U);
+  }
+  
+  /* Kitchen with door to living room */
+  room kitchen at (10U, 1U) size (5U, 5U) {
+    label: "Kitchen";
+    
+    /* Window on north wall */
+    use window at (2U, 0U);
+    
+    /* Door to living room (west side) */
+    use door.standard at (0U, 2U);
+  }
+  
+  /* Bedroom with windows and door */
+  room bedroom at (1U, 7U) size (6U, 4U) {
+    label: "Bedroom";
+    
+    /* Two windows on south wall */
+    use window at (1.5U, 4U);
+    use window at (3.5U, 4U);
+    
+    /* Door on north wall */
+    use door.standard at (2.5U, 0U);
+  }
+  
+  /* Bathroom with small window */
+  room bathroom at (8U, 7U) size (3U, 4U) {
+    label: "Bathroom";
+    
+    /* Small privacy window */
+    use window at (1U, 0U);
+    
+    /* Door */
+    use door.standard at (0U, 1.5U);
+  }
+  
+  /* Main entrance with wide door */
+  room entrance at (15U, 1U) size (4U, 3U) {
+    label: "Entrance";
+    
+    /* Wide entrance door */
+    use door.wide at (3U, 1U);
+  }
+  
+  /* Walls */
+  wall from (1U, 6U) to (15U, 6U);    /* Horizontal divider */
+  wall from (9U, 1U) to (9U, 6U);     /* Vertical divider */
+}
+

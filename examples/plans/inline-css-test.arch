@@ -1,0 +1,69 @@
+@1;
+@unit U = 50px;
+
+@draw InlineCSSTest {
+  @canvas 12U x 8U;
+  @grid grid size 1U color #ddd alpha 0.2;
+  
+  room red at (1U, 1U) size (3U, 2U) {
+    label: "Red Room";
+    background: #ff6b6b;
+    border-radius: 8px;
+  }
+  
+  room yellow at (5U, 1U) size (3U, 2U) {
+    label: "Yellow";
+    background: yellow;
+    margin: 0.2U;
+  }
+  
+  room gradient at (9U, 1U) size (2U, 2U) {
+    label: "Gradient";
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: 3px solid white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  room rotated at (2U, 4U) size (2U, 3U) {
+    label: "Rotated";
+    background: #4ecdc4;
+    transform: rotate(15deg);
+    border-radius: 4px;
+  }
+  
+  room shadow at (5U, 4U) size (3U, 3U) {
+    label: "Shadow";
+    background: white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    border: 2px solid #333;
+  }
+  
+  room pattern at (9U, 4U) size (2U, 3U) {
+    label: "Pattern";
+    background: repeating-linear-gradient(
+      45deg,
+      #95e1d3,
+      #95e1d3 10px,
+      #f38181 10px,
+      #f38181 20px
+    );
+  }
+  
+  wall from (4U, 1U) to (4U, 7U) {
+    background: #333;
+    height: 3px;
+  }
+  
+  wall from (1U, 3.5U) to (11U, 3.5U) {
+    background: #8b4513;
+    height: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  
+  door from (4U, 2U) to (4U, 3U) width 0.1U {
+    background: white;
+    border: 2px dashed #4080ff;
+  }
+}
+
+

@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ArchCSS Demo - Floor Plan Viewer</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", "GT America",
+          system-ui, sans-serif;
+        background: white;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: 680px 1fr;
+        height: 100vh;
+      }
+
+      /* Left Sidebar */
+      .sidebar {
+        background: white;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .branding {
+        padding: 20px 40px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .color-squares {
+        display: grid;
+        grid-template-columns: 7px 7px;
+        grid-template-rows: 7px 7px;
+        gap: 0;
+      }
+
+      .color-square {
+        width: 7px;
+        height: 7px;
+      }
+
+      .brand-text {
+        font-size: 16px;
+        color: black;
+      }
+
+      .recent-section {
+        padding: 0 40px 16px 40px;
+      }
+
+      .recent-files {
+        display: flex;
+        gap: 46px;
+        align-items: flex-start;
+        position: relative;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 20px;
+        background: white;
+      }
+
+      .recent-files::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 76px;
+        background: linear-gradient(
+          to top,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 1) 100%
+        );
+        pointer-events: none;
+        border-radius: 8px 8px 0 0;
+        z-index: 1;
+      }
+
+      .file-column {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+
+      .file-column.gap-8 {
+        gap: 8px;
+      }
+
+      .scroll-up {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 16px;
+        height: 16px;
+        background: #ccff4d;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate(180deg);
+        z-index: 10;
+      }
+
+      .scroll-up::before {
+        content: "▼";
+        font-size: 10px;
+        color: black;
+      }
+
+      .file-tag {
+        padding: 0 8px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: 400;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        border: none;
+        color: black;
+        white-space: nowrap;
+      }
+
+      .file-tag.dark-green {
+        background: #8ba958;
+      }
+
+      .file-tag.green {
+        background: #b1e15e;
+      }
+
+      .file-tag.light-green {
+        background: #e3ffb3;
+      }
+
+      .file-tag:hover {
+        opacity: 0.8;
+      }
+
+      .editor-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        background: #fbfbfb;
+        margin: 0 40px 40px 40px;
+        padding: 20px;
+      }
+
+      #editor {
+        flex: 1;
+        font-family:
+          "GT America Mono", "IBM Plex Mono", "SF Mono", Monaco, monospace;
+        font-size: 16px;
+        line-height: 1.6;
+        border: none;
+        resize: none;
+        background: transparent;
+        color: #101010;
+        tab-size: 2;
+      }
+
+      #editor:focus {
+        outline: none;
+      }
+
+      /* Right Panel */
+      .main-panel {
+        display: flex;
+        flex-direction: column;
+        background: #f6f6f6;
+      }
+
+      .render-area {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px;
+        overflow: auto;
+      }
+
+      #render-container {
+        display: inline-block;
+      }
+
+      /* Bottom Info Bar */
+      .info-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 40px;
+        background: white;
+        font-size: 16px;
+      }
+
+      .info-left {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .plan-label {
+        color: black;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .plan-name {
+        background: #8ba958;
+        color: black;
+        padding: 4px 12px;
+        font-weight: 400;
+      }
+
+      .dimensions {
+        color: black;
+      }
+
+      .view-mode {
+        color: black;
+        font-weight: 400;
+      }
+
+      .divider {
+        width: 1px;
+        height: 40px;
+        background: #e0e0e0;
+      }
+
+      .info-right {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        align-items: flex-end;
+      }
+
+      .action-link {
+        background: none;
+        border: none;
+        color: black;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: 400;
+        padding: 0;
+        text-decoration: none;
+      }
+
+      .action-link:hover {
+        text-decoration: underline;
+      }
+
+      /* Error state */
+      .error-display {
+        background: #ffebee;
+        border: 1px solid #ef5350;
+        border-radius: 4px;
+        padding: 20px;
+        color: #c62828;
+        font-size: 14px;
+        max-width: 600px;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Left Sidebar -->
+      <div class="sidebar">
+        <div class="branding">
+          <div class="color-squares">
+            <div class="color-square" style="background: #8ba958"></div>
+            <div class="color-square" style="background: #b1e15e"></div>
+            <div class="color-square" style="background: #b1e15e"></div>
+            <div class="color-square" style="background: #e3ffb3"></div>
+          </div>
+          <span class="brand-text">archcss v0.1</span>
+        </div>
+
+        <div class="recent-section">
+          <div class="recent-files">
+            <button class="scroll-up" aria-label="Scroll up"></button>
+
+            <div class="file-column">
+              <button class="file-tag dark-green" data-file="home">
+                MyHome
+              </button>
+              <button class="file-tag dark-green" data-file="ground-floor">
+                GroundFloor
+              </button>
+              <button class="file-tag dark-green" data-file="css-demo">
+                StyledHome
+              </button>
+            </div>
+
+            <div class="file-column gap-8">
+              <button class="file-tag green" data-file="bedroom">
+                Bedroom
+              </button>
+              <button class="file-tag green" data-file="door">Door</button>
+              <button class="file-tag green" data-file="wall">
+                Essential wall
+              </button>
+            </div>
+
+            <div class="file-column">
+              <button class="file-tag light-green" data-file="knob">
+                Knob
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-container">
+          <textarea id="editor" spellcheck="false"></textarea>
+        </div>
+      </div>
+
+      <!-- Right Panel -->
+      <div class="main-panel">
+        <div class="render-area">
+          <div id="render-container"></div>
+        </div>
+
+        <div class="info-bar">
+          <div class="info-left">
+            <div class="plan-label">
+              Plan for <span class="plan-name" id="plan-name">MyHome</span>
+            </div>
+            <div class="dimensions" id="dimensions">30x70 pixels</div>
+            <div class="divider"></div>
+            <div class="view-mode">2D</div>
+          </div>
+          <div class="info-right">
+            <button class="action-link" id="share-btn">Share</button>
+            <button class="action-link" id="download-btn">Download</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import {
+        tokenize,
+        parse,
+        compile,
+        generateCSS,
+        mount,
+      } from "./packages/parser/dist/index.js";
+
+      const editor = document.getElementById("editor");
+      const renderContainer = document.getElementById("render-container");
+      const planNameEl = document.getElementById("plan-name");
+      const dimensionsEl = document.getElementById("dimensions");
+
+      // Load initial example
+      const initialSource = await fetch("./examples/plans/home.arch").then(
+        (r) => r.text()
+      );
+      editor.value = initialSource;
+
+      let styleElement = null;
+
+      function compileArchCSS() {
+        const source = editor.value;
+
+        try {
+          const tokens = tokenize(source);
+          const parseResult = parse(tokens);
+
+          if (parseResult.errors.length > 0) {
+            throw new Error(
+              parseResult.errors
+                .map((e) => `Line ${e.loc?.start.line}: ${e.message}`)
+                .join("\n")
+            );
+          }
+
+          const model = compile(parseResult.ast);
+          const css = generateCSS(model);
+
+          // Update CSS
+          if (styleElement) styleElement.remove();
+          styleElement = document.createElement("style");
+          styleElement.textContent = css;
+          document.head.appendChild(styleElement);
+
+          // Mount
+          mount(renderContainer, model);
+
+          // Update info bar
+          planNameEl.textContent = parseResult.ast.name || "Untitled";
+
+          // Calculate actual pixel dimensions
+          const widthPx = Math.round(model.canvas.cols * model.scale);
+          const heightPx = Math.round(model.canvas.rows * model.scale);
+          dimensionsEl.textContent = `${widthPx}x${heightPx} pixels`;
+
+          console.log("✓ Compiled successfully", model);
+        } catch (error) {
+          console.error("Error:", error);
+          renderContainer.innerHTML = `
+            <div class="error-display">
+              ⚠️ Compilation Error\n\n${error.message}
+            </div>
+          `;
+        }
+      }
+
+      // Initial compile
+      compileArchCSS();
+
+      // Auto-compile on change with debounce
+      let compileTimeout = null;
+      editor.addEventListener("input", () => {
+        clearTimeout(compileTimeout);
+        compileTimeout = setTimeout(compileArchCSS, 500);
+      });
+
+      // Handle tab key
+      editor.addEventListener("keydown", (e) => {
+        if (e.key === "Tab") {
+          e.preventDefault();
+          const start = editor.selectionStart;
+          const end = editor.selectionEnd;
+          editor.value =
+            editor.value.substring(0, start) +
+            "  " +
+            editor.value.substring(end);
+          editor.selectionStart = editor.selectionEnd = start + 2;
+        }
+      });
+
+      // File map
+      const fileMap = {
+        home: "./examples/plans/home.arch",
+        "ground-floor": "./examples/plans/ground-floor.arch",
+        "css-demo": "./examples/plans/css-styling-demo.arch",
+      };
+
+      // File switching
+      document.querySelectorAll(".file-tag").forEach((btn) => {
+        btn.addEventListener("click", async (e) => {
+          const file = btn.dataset.file;
+          const filePath = fileMap[file];
+
+          if (filePath) {
+            try {
+              const source = await fetch(filePath).then((r) => r.text());
+              editor.value = source;
+              compileArchCSS();
+            } catch (error) {
+              console.error(`Failed to load ${file}:`, error);
+              alert(`Failed to load ${file}`);
+            }
+          } else {
+            alert(`Loading ${file}... (to be implemented)`);
+          }
+        });
+      });
+
+      // Share button
+      document.getElementById("share-btn").addEventListener("click", () => {
+        const encoded = btoa(editor.value);
+        const url = `${window.location.origin}${window.location.pathname}?code=${encoded}`;
+        navigator.clipboard.writeText(url);
+        alert("Link copied to clipboard!");
+      });
+
+      // Download button
+      document.getElementById("download-btn").addEventListener("click", () => {
+        const planName = planNameEl.textContent || "plan";
+        const blob = new Blob([editor.value], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${planName}.arch`;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      // Load from URL parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const codeParam = urlParams.get("code");
+      if (codeParam) {
+        try {
+          editor.value = atob(codeParam);
+          compileArchCSS();
+        } catch (e) {
+          console.error("Failed to decode URL parameter");
+        }
+      }
+    </script>
+  </body>
+</html>

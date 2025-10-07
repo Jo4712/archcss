@@ -1,0 +1,86 @@
+@1;
+@unit U = 50px;
+
+@draw StyledHome {
+  @canvas 16U x 10U;
+  @grid grid size 1U color #ddd alpha 0.2;
+  
+  // Kitchen with gradient background
+  room kitchen at (1U, 1U) size (5U, 4U) {
+    label: "Kitchen";
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: 3px solid #333;
+  }
+  
+  // Living room with custom styling
+  room living at (7U, 1U) size (8U, 4U) {
+    label: "Living Room";
+    background: #f0f0f0;
+    border: 2px dashed #999;
+    margin: 0.2U;
+    transform: rotate(1deg);
+    transition: all 0.3s ease;
+  }
+  
+  // Bedroom with pattern background
+  room bedroom at (1U, 6U) size (6U, 3U) {
+    label: "Bedroom";
+    background: repeating-linear-gradient(
+      45deg,
+      #f5f5f5,
+      #f5f5f5 10px,
+      #e0e0e0 10px,
+      #e0e0e0 20px
+    );
+    border-radius: 4px;
+    border: 2px solid #666;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  // Bathroom with radial gradient
+  room bathroom at (8U, 6U) size (4U, 3U) {
+    label: "Bath";
+    background: radial-gradient(circle, #e3f2fd 0%, #bbdefb 100%);
+    border: 2px solid #1976d2;
+    border-radius: 12px;
+  }
+  
+  // Office with filter effect
+  room office at (13U, 6U) size (2U, 3U) {
+    label: "Office";
+    background: yellow;
+    filter: brightness(1.1) saturate(0.8);
+    opacity: 0.9;
+    margin-left: 0.1U;
+    margin-top: -0.1U;
+  }
+  
+  // Walls with custom styling
+  wall from (6U, 1U) to (6U, 5U) {
+    background: #8b4513;
+    height: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  
+  wall from (1U, 5U) to (15U, 5U) {
+    background: linear-gradient(90deg, #8b4513 0%, #654321 100%);
+    height: 3px;
+  }
+  
+  // Doors with custom styling  
+  door from (3U, 5U) to (4U, 5U) width 0.1U {
+    background: white;
+    border: 2px solid #4080ff;
+    box-shadow: 0 2px 4px rgba(64, 128, 255, 0.3);
+    border-radius: 2px;
+  }
+  
+  door from (10U, 5U) to (11U, 5U) width 0.1U {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px dashed #ff6b6b;
+    opacity: 0.8;
+  }
+}
+

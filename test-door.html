@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Door Test</title>
+    <style>
+      body {
+        font-family: system-ui;
+        padding: 20px;
+        background: #f0f0f0;
+      }
+      pre {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Door Syntax Test</h1>
+    <p>Testing door parsing with new syntax...</p>
+    <pre id="output"></pre>
+
+    <script type="module">
+      import {
+        tokenize,
+        parse,
+        compile,
+        generateCSS,
+        mount,
+      } from "./packages/parser/dist/index.js";
+
+      const source = `
+@unit U = 48px;
+
+@plan Test {
+  @canvas 10U x 10U;
+  
+  room living at (1U, 1U) size (4U, 4U) {
+    label: "Living";
+  }
+  
+  wall from (5U, 1U) to (5U, 5U);
+  door from (5U, 2U) to (5U, 3U) width 1U;
+}
+      `;
+
+      const output = document.getElementById("output");
+
+      try {
+        output.textContent = "Tokenizing...\n";
+        const tokens = tokenize(source);
+        output.textContent += `✓ Tokenized: ${tokens.length} tokens\n\n`;
+
+        output.textContent += "Parsing...\n";
+        const parseResult = parse(tokens);
+
+        if (parseResult.errors.length > 0) {
+          output.textContent += `✗ Parse errors:\n`;
+          parseResult.errors.forEach((e) => {
+            output.textContent += `  Line ${e.loc?.start.line}: ${e.message}\n`;
+          });
+        } else {
+          output.textContent += `✓ Parsed successfully\n`;
+          output.textContent += `  Rooms: ${parseResult.ast.rooms.length}\n`;
+          output.textContent += `  Walls: ${parseResult.ast.walls.length}\n`;
+          output.textContent += `  Doors: ${parseResult.ast.doors.length}\n\n`;
+        }
+
+        output.textContent += "Compiling...\n";
+        const model = compile(parseResult.ast);
+        output.textContent += `✓ Compiled\n\n`;
+
+        output.textContent += "Door data:\n";
+        output.textContent += JSON.stringify(model.doors, null, 2) + "\n\n";
+
+        output.textContent += "Generating CSS...\n";
+        const css = generateCSS(model);
+        output.textContent += `✓ Generated ${css.length} chars of CSS\n\n`;
+
+        output.textContent += "✅ All steps completed successfully!";
+      } catch (error) {
+        output.textContent += `\n\n❌ ERROR:\n${error.message}\n\n${error.stack}`;
+      }
+    </script>
+  </body>
+</html>

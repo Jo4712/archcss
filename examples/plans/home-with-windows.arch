@@ -1,0 +1,41 @@
+/* Floor plan with reusable window components */
+
+@unit U = 50px;
+
+/* Import window component - implicit resolution, no path! */
+import Window;
+
+@plan MyHome {
+  @canvas 18U x 10U;
+  @grid grid size 2U color #ccc alpha 0.15;
+  
+  room living at (1U, 1U) size (6U, 4U) {
+    label: "Living Room";
+    
+    /* Repeat windows along top wall - from 0U to 6U, every 1.5U */
+    repeat Window from (0U, 0U) to (6U, 0U) space 1.5U;
+    
+    /* Or use single window */
+    use Window at (0U, 2U);  /* Left wall, 2U from top */
+  }
+  
+  room kitchen at (8U, 1U) size (5U, 3U) {
+    label: "Kitchen";
+    
+    /* Repeat windows along top wall */
+    repeat Window from (1U, 0U) to (4U, 0U) space 1.5U;
+  }
+  
+  room bedroom at (1U, 6U) size (5U, 3U) {
+    label: "Bedroom";
+    
+    /* Windows along bottom wall (south side) */
+    repeat Window from (1U, 3U) to (4U, 3U) space 1.5U;
+  }
+  
+  wall from (1U, 5.5U) to (13U, 5.5U);
+  wall from (7.5U, 1U) to (7.5U, 4U);
+  
+  door from (7.5U, 2U) to (7.5U, 3U) width 1U;
+}
+

@@ -1,0 +1,11 @@
+/* Reusable window component */
+
+@component window {
+  /* Window is a small rectangular opening */
+  shape window at (0U, 0U) size (1U, 0.3U) {
+    background: #e3f2fd;
+    border: 2px solid #1976d2;
+    label: "Window";
+  }
+}
+

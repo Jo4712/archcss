@@ -1,0 +1,112 @@
+@1;
+
+@unit U = 30px;
+
+@draw GroundFloor {
+  @canvas 24U x 14U;
+  @grid grid size 1U color #ccc alpha 0.15;
+  
+  // Bath room (top left)
+  room bath_room at (1U, 1U) size (3U, 3U) {
+    label: "Bath room";
+    background: #f5f5f5;
+    border: 2px solid #666;
+  }
+  
+  // Kitchen (center-left)
+  room kitchen at (4U, 1U) size (5U, 5.5U) {
+    label: "Kitchen";
+    background: #fafafa;
+    border: 2px solid #666;
+  }
+  
+  // Bed room 2 (center)
+  room bedroom_2 at (9U, 1U) size (6U, 5.5U) {
+    label: "Bed room 2";
+    background: #fafafa;
+    border: 2px solid #666;
+  }
+  
+  // Bed room 1 (right)
+  room bedroom_1 at (15U, 1U) size (8U, 9U) {
+    label: "Bed room 1";
+    background: #fafafa;
+    border: 2px solid #666;
+  }
+  
+  // Bath room (bottom right)
+  room bath_room_2 at (17U, 10U) size (6U, 3U) {
+    label: "Bath room";
+    background: #f5f5f5;
+    border: 2px solid #666;
+  }
+  
+  // Living area (bottom left - open space)
+  room living at (1U, 4U) size (8U, 9U) {
+    label: "";
+    background: transparent;
+    border: none;
+  }
+  
+  // Outer walls
+  wall from (1U, 1U) to (23U, 1U);   // Top wall
+  wall from (23U, 1U) to (23U, 13U); // Right wall
+  wall from (23U, 13U) to (1U, 13U); // Bottom wall
+  wall from (1U, 13U) to (1U, 1U);   // Left wall
+  
+  // Internal walls - horizontal
+  wall from (4U, 6.5U) to (9U, 6.5U);   // Below kitchen
+  wall from (9U, 6.5U) to (15U, 6.5U);  // Below bedroom 2
+  wall from (15U, 10U) to (23U, 10U);   // Above bath room 2
+  
+  // Internal walls - vertical
+  wall from (4U, 1U) to (4U, 6.5U);     // Left of kitchen
+  wall from (9U, 1U) to (9U, 6.5U);     // Between kitchen and bedroom 2
+  wall from (15U, 1U) to (15U, 10U);    // Left of bedroom 1
+  wall from (17U, 10U) to (17U, 13U);   // Left of bath room 2
+  wall from (1U, 4U) to (4U, 4U);       // Below bath room (top left)
+  
+  // Doors - straight openings only (no arcs)
+  door from (4U, 4.5U) to (4U, 5.5U) width 0.1U;    // Kitchen door
+  door from (9U, 3.5U) to (9U, 4.5U) width 0.1U;    // Bedroom 2 door
+  door from (15U, 5U) to (15U, 6U) width 0.1U;      // Bedroom 1 door
+  door from (20U, 10U) to (21U, 10U) width 0.1U;    // Bath room 2 door
+  door from (2U, 4U) to (3U, 4U) width 0.1U;        // Bath room door
+  door from (1U, 8U) to (1U, 9U) width 0.1U;        // Front entrance
+}
+
+/* 
+ * ❌ NOT CURRENTLY POSSIBLE:
+ * 
+ * 1. Door swing arcs (curved lines showing door movement)
+ *    - Requires: arc/curve primitives (Milestone 5)
+ *    - Workaround: Just show door opening as rectangle
+ * 
+ * 2. Fixtures (toilet, sink, bathtub)
+ *    - Requires: Component library with predefined fixtures
+ *    - Workaround: Create as small rooms or wait for component system
+ * 
+ * 3. Exact measurements from image
+ *    - Image doesn't show dimensions
+ *    - Workaround: Estimated proportions visually
+ * 
+ * 4. Hatching/patterns for different room types
+ *    - Requires: CSS pattern fills (can use inline CSS when implemented)
+ *    - Workaround: Use background colors
+ * 
+ * 5. Compass rose (N, E, S, W indicator)
+ *    - Requires: Annotation/overlay system
+ *    - Workaround: Could create as separate component
+ * 
+ * ✅ CURRENTLY POSSIBLE:
+ * 
+ * - All room positioning and sizing
+ * - All walls (straight lines)
+ * - Door openings (as rectangles)
+ * - Labels
+ * - Grid overlay
+ * - Custom colors via inline CSS (implemented today!)
+ * - Borders and backgrounds
+ * - Any standard CSS properties
+ */
+
