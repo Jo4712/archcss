@@ -82,11 +82,11 @@ Try archcss in your browser: **[archcss.dev/editor](https://archcss.dev/editor)*
 
 ## 📖 Documentation
 
-- **[Getting Started](https://archcss.dev/docs/getting-started)** - Quick setup guide
-- **[Language Reference](https://archcss.dev/docs/language)** - Complete syntax reference
-- **[API Documentation](https://archcss.dev/docs/api)** - Parser and runtime APIs
-- **[Examples](https://archcss.dev/docs/examples)** - Sample floor plans
-- **[Component Library](https://archcss.dev/docs/components)** - Reusable components
+- **[Complete Specification](./docs/specification.md)** - Language reference and API documentation
+- **[Project Plan](./docs/project-plan.md)** - Development status and phases
+- **[Roadmap](./docs/roadmap.md)** - Feature milestones and timeline
+- **[Examples Guide](./docs/examples-README.md)** - Sample floor plans and usage
+- **[Development Log](./docs/log.md)** - Decision tracking and history
 
 ## 🎯 Current Status: v0.1.0-alpha.1
 
